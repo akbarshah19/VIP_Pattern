@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  HomeViewController2.swift
 //  VIP_Pattern
 //
 //  Created by Akbarshah Jumanazarov on 3/19/25.
@@ -7,26 +7,28 @@
 
 import UIKit
 
-protocol HomeDisplayLogic: AnyObject {
-    func displayMessage(viewModel: HomeModels.ViewModel)
+protocol HomeDisplayLogic2: AnyObject {
+    func displayMessage(viewModel: HomeModels2.ViewModel)
 }
 
-class HomeViewController: UIViewController, HomeDisplayLogic {
-    var interactor: HomeBusinessLogic?
-    var router: HomeRoutingLogic?
+class HomeViewController2: UIViewController, HomeDisplayLogic2 {
+    var interactor: HomeBusinessLogic2?
+//    var router: HomeRoutingLogic2?
 
     private let label: UILabel = {
         let label = UILabel()
+        label.text = "Hello"
+        label.textColor = .label
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 20)
-        label.textColor = .red
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     private let button: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Get Message", for: .normal)
+        button.setTitle("Get Random Joke", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -39,15 +41,15 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
 
     private func setup() {
         let viewController = self
-        let interactor = HomeInteractor()
-        let presenter = HomePresenter()
-        let router = HomeRouter()
+        let interactor = HomeInteractor2()
+        let presenter = HomePresenter2()
+//        let router = HomeRouter2()
         
         viewController.interactor = interactor
-        viewController.router = router
+//        viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
-        router.viewController = viewController
+//        router.viewController = viewController
     }
 
     private func setupUI() {
@@ -58,6 +60,8 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
         NSLayoutConstraint.activate([
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
             button.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20),
             button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
@@ -67,10 +71,10 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     }
 
     @objc private func buttonTapped() {
-        interactor?.fetchMessage(request: HomeModels.Request())
+        interactor?.fetchJoke(request: HomeModels2.Request())
     }
 
-    func displayMessage(viewModel: HomeModels.ViewModel) {
+    func displayMessage(viewModel: HomeModels2.ViewModel) {
         label.text = viewModel.message
     }
 }
